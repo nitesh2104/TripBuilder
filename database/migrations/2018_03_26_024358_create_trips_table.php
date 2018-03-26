@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateClassTypesTable extends Migration
+class CreateTripsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateClassTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create(/**
-         * @param Blueprint $table
-         */
-            'class_types', function (Blueprint $table) {
+        Schema::create('trips', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-            $table->enum('type',['Economy', 'First', 'Business', 'Premium']);
+            $table->string('departure');
+            $table->foreign('departure')->references('airport_code')->on('airports');
+            $table->string('destination');
+            $table->foreign('destination')->references('airport_code')->on('airports');
         });
     }
 
@@ -30,6 +30,6 @@ class CreateClassTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('class_types');
+        Schema::dropIfExists('trips');
     }
 }

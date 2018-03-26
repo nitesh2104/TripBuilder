@@ -16,17 +16,37 @@ use Illuminate\Support\Facades\Request;
 class AirportController extends Model
 {
     /**
-     * @api {get} /api/v1/airports/:code Autocomplete
+     * @api {get} /airports
      * @apiGroup Airport
-     * @apiName AutoCOmplete
-     * @apiDescription It returns all airports or city with the terms typed
-     * @apiParam  Request $request [Illuminate\Http\Request]
-     * @return [string]           [JSON]
+     * @apiName AirportList
+     * @apiDescription This method will return the json file from the stored data in the database which was originally parsed from github url.
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View [string] [JSON]
      */
-    public function autocomplete(Request $request)
+    public function get_airports()
     {
-        $airports = Airport::where('city', 'like', "$request->airportOrCity%")->orWhere('code', 'like', "$request->airportOrCity%")->orderBy('code', 'asc')->limit(10)->get();
-        return response()->json($airports, 200);
+        return view('showairports',['name' => Airport::select('airport_name')->orderBy('airport_name', 'asc')->whereNotNull('airport_name')->distinct()->get()]);
+//        $string = file_get_contents("https://gist.githubusercontent.com/tdreyno/4278655/raw/7b0762c09b519f40397e4c3e100b097d861f5588/airports.json");
+//        $json = json_decode($string, TRUE);
+//        foreach ($json as $item) {
+//            $code = $item['code'];
+//            $name = $item['name'];
+//            $city = $item['city'];
+//            if (is_null($item['state']) == True){
+//                $state ="";
+//            }
+//            else{
+//                $state = $item['state'];
+//            }
+//            $country = $item['country'];
+//            $airport = new Airport;
+//            $airport->airport_name = $name;
+//            $airport->airport_code = $code;
+//            $airport->city = $city;
+//            $airport->state = $state;
+//            $airport->country = $country;
+////            $airport->save();
+//            echo "Code: ".$code.", Name: ".$name.", State: ".$state.", Country: ".$country."<br/>";
+//        }
     }
 
 }

@@ -16,41 +16,19 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function landing_page()
     {
         return view('welcome');
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function main_page()
     {
         return view('main');
-    }
-
-    /**
-     * This method will parse the json file from the github url mentioned and will store the data in the database.
-     */
-    public function get_airports(){
-        $string = file_get_contents("https://gist.githubusercontent.com/tdreyno/4278655/raw/7b0762c09b519f40397e4c3e100b097d861f5588/airports.json");
-        $json = json_decode($string, TRUE);
-        foreach ($json as $item) {
-            $code = $item['code'];
-            $name = $item['name'];
-            $city = $item['city'];
-            if (is_null($item['state']) == True){
-                $state ="";
-            }
-            else{
-                $state = $item['state'];
-            }
-            $country = $item['country'];
-            $airport = new Airport;
-            $airport->airport_name = $name;
-            $airport->airport_code = $code;
-            $airport->city = $city;
-            $airport->state = $state;
-            $airport->country = $country;
-//            $airport->save();
-            echo "Code: ".$code.", Name: ".$name.", State: ".$state.", Country: ".$country."<br/>";
-        }
     }
 }

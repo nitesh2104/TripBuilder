@@ -7,12 +7,13 @@
     <meta name="author" content="">
     <title>TripBuilder</title>
     <!-- Bootstrap core CSS -->
-    <link  rel="stylesheet" type="text/css" href="{{ URL::asset('css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
     <!-- Custom fonts for this template -->
-    <link  rel="stylesheet" type="text/css" href="{{URL::asset('css/font-awesome.min.css')}}">
-    <link  rel="stylesheet" type="text/css" href="{{URL::asset('css/simple-line-icons.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('css/font-awesome.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('css/simple-line-icons.css')}}">
     <!-- Custom styles for this template -->
-    <link  rel="stylesheet" type="text/css" href="{{URL::asset('css/landing-page.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('css/landing-page.css')}}">
+    <link rel="shortcut icon" type="image/png" href="{{asset('images/favicon.png')}}"/>
     <!-- Import Fonts-->
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic">
 </head>
@@ -20,8 +21,8 @@
 <!-- Navigation -->
 <nav class="navbar navbar-light bg-light static-top">
     <div class="container">
-        <a class="navbar-brand" href="#">TripBuilder</a>
-        <a class="btn btn-primary" href="#">Sign In</a>
+        <a class="navbar-brand" href="#"><img src="{{asset("images/favicon.png")}}" class="icon_main" alt="">&nbsp;TripBuilder</a>
+        <a class="btn btn-primary" href="{{url('airports')}}">See Airports</a>
     </div>
 </nav>
 <!-- Masthead -->
@@ -29,36 +30,24 @@
     <div class="overlay"></div>
     <div class="search_box_div">
         <div class="row">
-            <h2><i class="fa fa-plane"></i>Flights</h2>
-            <div class="col-md-19 col-lg-22 col-xl-24">
-                <form>
-                    <div class="form-row">
-                        <div class="col-6 col-md-9 mb-2 mb-md-0">
-                            <input type="text" class="form-control form-control-lg" placeholder="Leaving From">
-                        </div>
-                        <div class="col-6 col-md-9 mb-2 mb-md-0">
-                            <input type="text" class="form-control form-control-lg" placeholder="Going To">
-                        </div>
-                        <div class="col-6 col-md-9 mb-2 mb-md-0">
-                            <input type="date" class="form-control form-control-lg" placeholder="Depart">
-                        </div>
-                        <div class="col-6 col-md-9 mb-2 mb-md-0">
-                            <input type="date" class="form-control form-control-lg" placeholder="Return">
-                        </div>
-                        <div class="dropdown show col-6 col-md-9 mb-2 mb-md-0">
-                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Select Class
-                            </a>
-
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                            </div>
-                        </div>
-
+            <div class="col-md-12">
+                <form role="form" method="post" action="/api/v1/flights/search">
+                    <div class="form-group input-group">
+                <span class="input-group-addon">
+                    <span class='fas fa-arrow-circle-right'></span>
+                </span>
+                        <input type="text" name="from" class="search form-control" placeholder="Departing City or Airport">
                     </div>
+
+                    <div class="form-group input-group">
+                <span class="input-group-addon">
+                    <span class='fas fa-arrow-circle-left'></span>
+                </span>
+                        <input type="text" name="to" class="search form-control" placeholder="Returning City or Airport">
+                    </div>
+                    <button type="submit" class="btn btn-default">Lets Go!</button>
                 </form>
+
             </div>
         </div>
     </div>
@@ -147,7 +136,7 @@
 </footer>
 
 <!-- Bootstrap core JavaScript -->
-<script src="{{URL::asset('js/jquery/jquery.min.js')}}"></script>
-<script src="{{URL::asset('js/bootstrap.bundle.min.js')}}"></script>
+<script src="{{asset('js/jquery/jquery.min.js')}}"></script>
+<script src="{{asset('js/bootstrap.bundle.min.js')}}"></script>
 </body>
 </html>

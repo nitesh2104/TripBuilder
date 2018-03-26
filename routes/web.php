@@ -19,4 +19,5 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'Controller@landing_page');
 Route::get('/main', 'Controller@main_page');
+Route::get('/airports', 'Controller@get_airports');
 

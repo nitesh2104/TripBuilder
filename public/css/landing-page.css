@@ -109,6 +109,7 @@ header.masthead h1 {
     background-size: cover;
     padding-top: 7rem;
     padding-bottom: 7rem;
+    z-index: -1;
 }
 
 .call-to-action .overlay {
@@ -125,10 +126,29 @@ footer.footer {
     padding-top: 4rem;
     padding-bottom: 4rem;
 }
-.search_box_div{
+
+.search_box_div {
     margin-left: 5%;
     padding: 3em;
     width: 40%;
     background-color: #0000008c;
     border-radius: 1rem;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #5c6ac4;
+    border-color: #5c6ac4;
+}
+
+.btn-primary:hover {
+    color: #fff;
+    background-color: #202e78;
+    border-color: #202e78;
+}
+
+.icon_main {
+    cursor: pointer;
+    height: 40px;
+    padding-left: 0px;
 }

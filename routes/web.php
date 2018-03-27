@@ -20,7 +20,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'Controller@landing_page');
 Route::get('/main', 'Controller@main_page');
 Route::prefix('airports')->group(function () {
-    Route::get('autocomplete/{airportOrCity}', 'AirportController@autocomplete');
+    Route::get('autocomplete/{input}', 'AirportController@autocomplete');
     Route::get('/', 'AirportController@get_airports');
     Route::get('/search', 'AirportController@get_flights');
 });

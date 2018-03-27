@@ -21,7 +21,7 @@
 <!-- Navigation -->
 <nav class="navbar navbar-light bg-light static-top">
     <div class="container">
-        <a class="navbar-brand" href="#"><img src="{{asset("images/favicon.png")}}" class="icon_main" alt="">&nbsp;TripBuilder</a>
+        <a class="navbar-brand" href="/"><img src="{{asset("images/favicon.png")}}" class="icon_main" alt="">&nbsp;TripBuilder</a>
         <a class="btn btn-primary" href="{{url('airports')}}">See Airports</a>
     </div>
 </nav>
@@ -41,7 +41,7 @@
                         <input type="text" name="to" class="search form-control"
                                placeholder="Returning City or Airport">
                     </div>
-                    <button type="submit" class="btn btn-default">Lets Go!</button>
+                    <button type="submit" class="btn btn-primary">Lets Go!</button>
                 </form>
 
             </div>
@@ -56,6 +56,7 @@
     var base_url = window.location.origin;
     $('.search').autocomplete({
         source: function (request, response) {
+            console.log(request);
             $.ajax({
                 url: base_url + "/airports/autocomplete/" + request.term,
                 dataType: 'json',

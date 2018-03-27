@@ -58,31 +58,21 @@ class AirportController extends Model
         return view('getflights', ['name' => Trip::select('departure', 'destination')->orderBy('departure')->get()]);
     }
 
-    /**
-     * @api {get} /api/v1/airports/:id Show Airport
-     * @apiGroup Airport
-     * @apiName GetAirport
-     * @apiDescription Display the specified resource.
-     * @apiParam  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show(Airport $airport)
     {
         return $airport;
     }
 
     /**
-     * @api {get} /api/v1/airports/:code Autocomplete
-     * @apiGroup Airport
-     * @apiName AutoCOmplete
-     * @apiDescription It returns all airports or city with the terms typed
+     * @apiGroup Airports
+     * @apiDescription Returns autosuggested airports
      * @apiParam  Request $request [Illuminate\Http\Request]
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse [string}[JSON]
      */
     public function autocomplete(Request $request)
     {
-        $airports = Airport::where('city', 'like', "$request->airportOrCity%")->orWhere('airport_code', 'like', "$request->airportOrCity%")->orderBy('airport_code', 'asc')->limit(10)->get();
+        $airports = Airport::where('city', 'like', "$request->input%")->orWhere('airport_code', 'like', "$request->input%")->orderBy('airport_code', 'asc')->limit(10)->get();
         return response()->json($airports, 200);
     }
 

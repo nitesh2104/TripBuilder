@@ -14,6 +14,11 @@ use Illuminate\Support\Facades\Request;
 
 class TripController extends Model
 {
+    /**
+     * @param Request $request
+     * @param $formData
+     * @return \Illuminate\Http\JsonResponse
+     */
     function get_Trips(Request $request, $formData)
     {
         $from = Airport::select('airport_code')->where('airport_name', 'like', "$formData->from")->get();
@@ -46,9 +51,10 @@ class TripController extends Model
 
     /**
      * @param Request $request
-     * @param $departure
-     * @param $destination
+     * @param $formData
      * @return mixed
+     * @internal param $departure
+     * @internal param $destination
      */
     function delete_Trips(Request $request, $formData)
     {

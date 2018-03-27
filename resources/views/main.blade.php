@@ -33,17 +33,13 @@
             <div class="col-md-12">
                 <form role="form" method="post" action="/search">
                     <div class="form-group input-group">
-                <span class="input-group-addon">
-                    <span class='fas fa-arrow-circle-right'></span>
-                </span>
-                        <input type="text" name="from" class="search form-control" placeholder="Departing City or Airport">
+                        <input type="text" name="from" class="search form-control"
+                               placeholder="Departing City or Airport">
                     </div>
 
                     <div class="form-group input-group">
-                <span class="input-group-addon">
-                    <span class='fas fa-arrow-circle-left'></span>
-                </span>
-                        <input type="text" name="to" class="search form-control" placeholder="Returning City or Airport">
+                        <input type="text" name="to" class="search form-control"
+                               placeholder="Returning City or Airport">
                     </div>
                     <button type="submit" class="btn btn-default">Lets Go!</button>
                 </form>
@@ -53,8 +49,29 @@
     </div>
 </header>
 
-<!-- Bootstrap core JavaScript -->
-<script src="{{asset('js/jquery/jquery.min.js')}}"></script>
-<script src="{{asset('js/bootstrap.bundle.min.js')}}"></script>
+<script src="{{asset('js/jquery.min.js')}}"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="{{asset('js/bootstrap.min.js')}}"></script>
+<script>
+    var base_url = window.location.origin;
+    $('.search').autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: base_url + "/airports/autocomplete/" + request.term,
+                dataType: 'json',
+                success: function (data) {
+                    response(data.map(function (value) {
+                        return {
+                            'label': '' + value.airport_name + ' (' + value.airport_code + ') - ' + value.airport_city + '',
+                            'value': value.code
+                        };
+                    }));
+                }
+            });
+        },
+        minLength: 2
+    });
+</script>
+
 </body>
 </html>

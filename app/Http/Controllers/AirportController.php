@@ -10,6 +10,7 @@ namespace App\Http\Controllers;
 
 
 use App\Airport;
+use App\Trip;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Request;
 
@@ -24,7 +25,7 @@ class AirportController extends Model
      */
     public function get_airports()
     {
-        return view('showairports',['name' => Airport::select('airport_name')->orderBy('airport_name', 'asc')->whereNotNull('airport_name')->distinct()->get()]);
+        return view('showairports', ['name' => Airport::select('airport_name')->orderBy('airport_name', 'asc')->whereNotNull('airport_name')->distinct()->get()]);
 //        $string = file_get_contents("https://gist.githubusercontent.com/tdreyno/4278655/raw/7b0762c09b519f40397e4c3e100b097d861f5588/airports.json");
 //        $json = json_decode($string, TRUE);
 //        foreach ($json as $item) {
@@ -47,6 +48,42 @@ class AirportController extends Model
 ////            $airport->save();
 //            echo "Code: ".$code.", Name: ".$name.", State: ".$state.", Country: ".$country."<br/>";
 //        }
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function get_flights()
+    {
+        return view('getflights', ['name' => Trip::select('departure', 'destination')->orderBy('departure')->get()]);
+    }
+
+    /**
+     * @api {get} /api/v1/airports/:id Show Airport
+     * @apiGroup Airport
+     * @apiName GetAirport
+     * @apiDescription Display the specified resource.
+     * @apiParam  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Airport $airport)
+    {
+        return $airport;
+    }
+
+    /**
+     * @api {get} /api/v1/airports/:code Autocomplete
+     * @apiGroup Airport
+     * @apiName AutoCOmplete
+     * @apiDescription It returns all airports or city with the terms typed
+     * @apiParam  Request $request [Illuminate\Http\Request]
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse [string}[JSON]
+     */
+    public function autocomplete(Request $request)
+    {
+        $airports = Airport::where('city', 'like', "$request->airportOrCity%")->orWhere('airport_code', 'like', "$request->airportOrCity%")->orderBy('airport_code', 'asc')->limit(10)->get();
+        return response()->json($airports, 200);
     }
 
 }

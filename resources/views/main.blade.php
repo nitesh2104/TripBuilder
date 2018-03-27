@@ -31,7 +31,7 @@
     <div class="search_box_div">
         <div class="row">
             <div class="col-md-12">
-                <form role="form" method="post" action="/search">
+                <form role="form" method="post" action="/airports/search">
                     <div class="form-group input-group">
                         <input type="text" name="from" class="search form-control"
                                placeholder="Departing City or Airport">

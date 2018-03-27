@@ -22,6 +22,7 @@ Route::get('/main', 'Controller@main_page');
 Route::prefix('airports')->group(function () {
     Route::get('autocomplete/{input}', 'AirportController@autocomplete');
     Route::get('/', 'AirportController@get_airports');
-    Route::get('/search', 'AirportController@get_flights');
+//    Route::get('/search', 'AirportController@get_flights');
+    Route::post('/search', 'TripController@getTrips');
 });
-Route::post('/search', 'TripController@getAllFlights');
+

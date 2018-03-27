@@ -16,10 +16,14 @@ use Illuminate\Support\Facades\Request;
 
 class AirportController extends Model
 {
+    /**
+     * This method allows to re-create the Airport table with all the values from the link provided.
+     * Technically only the new values should be updates in the database.
+     * But for now, the quickest way to implement is to wipe up the table entries and recreate it.
+     */
     function create_airports()
     {
         Airport::truncate();
-
         $string = file_get_contents("https://gist.githubusercontent.com/tdreyno/4278655/raw/7b0762c09b519f40397e4c3e100b097d861f5588/airports.json");
         $json = json_decode($string, TRUE);
         foreach ($json as $item) {
@@ -39,7 +43,6 @@ class AirportController extends Model
             $airport->state = $state;
             $airport->country = $country;
             $airport->save();
-            echo "Code: " . $code . ", Name: " . $name . ", State: " . $state . ", Country: " . $country . "<br/>";
         }
     }
 
@@ -57,6 +60,7 @@ class AirportController extends Model
     }
 
     /**
+     * This method will provide the list of all the flights and their details by taking in the airport code
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function get_flights()
@@ -64,12 +68,18 @@ class AirportController extends Model
         return view('getflights', ['name' => Trip::select('departure', 'destination')->orderBy('departure')->get()]);
     }
 
+    /**
+     * Returning the airport object
+     * @param Airport $airport
+     * @return Airport
+     */
     public function show(Airport $airport)
     {
         return $airport;
     }
 
     /**
+     * Provides the functionality to suggest airports stored in the DB.
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */

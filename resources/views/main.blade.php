@@ -34,34 +34,32 @@
     <div class="search_box_div">
         <div class="row">
             <div class="col-md-12">
-                <form role="form" method="post" action="">
-                    <div class="form-group input-group">
-                        <input type="text" name="from" class="search form-control"
-                               placeholder="Departing City or Airport">
-                    </div>
+                <div class="form-group input-group">
+                    <input type="text" name="from" class="search form-control"
+                           placeholder="Departing City or Airport">
+                </div>
 
-                    <div class="form-group input-group">
-                        <input type="text" name="to" class="search form-control"
-                               placeholder="Returning City or Airport">
-                    </div>
+                <div class="form-group input-group">
+                    <input type="text" name="to" class="search form-control"
+                           placeholder="Returning City or Airport">
+                </div>
 
-                    <button class="btn btn-primary" onclick="post_tripdata('search')"><i
-                                class="fas fa-telegram-plane"></i>&nbsp;Lets Go!
-                    </button>
-                    <button class="btn btn-primary" onclick="post_tripdata('add_trip')"><i
-                                class="fas fa-plus-square"></i>&nbsp;Add Trip
-                    </button>
-                    <button class="btn btn-primary" onclick="post_tripdata('delete_trip')"><i
-                                class="fas fa-minus-circle"></i>&nbsp;Delete Trip
-                    </button>
-                </form>
+                <button class="btn btn-primary searches"><i
+                            class="fas fa-telegram-plane"></i>&nbsp;Lets Go!
+                </button>&emsp;
+                <button class="btn btn-primary"><i
+                            class="fas fa-plus-square"></i>&nbsp;Add Trip
+                </button>&emsp;
+                <button class="btn btn-primary"><i
+                            class="fas fa-minus-circle"></i>&nbsp;Delete Trip
+                </button>
             </div>
         </div>
     </div>
 </header>
 
 <script src="{{asset('js/jquery.min.js')}}"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="{{asset('js/jquery-ui.js')}}"></script>
 <script src="{{asset('js/bootstrap.min.js')}}"></script>
 <script>
     var base_url = window.location.origin;
@@ -82,9 +80,7 @@
         },
         minLength: 1
     });
-</script>
-<script>
-    function post_tripdata(action) {
+    $(".searches").click(function (event) {
         var formData = {
             'from': $('input[name=from]').val(),
             'to': $('input[name=to]').val()
@@ -94,14 +90,14 @@
                 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
             }
         });
+        alert(base_url + "/airports/search/");
         $.ajax({
             type: 'POST',
-            url: "/airports/" + action,
-            data: formData,
-            dataType: json
-        })
-    }
+            url: base_url + "/airports/search",
+            data: formData
+        });
+        event.preventDefault();
+    });
 </script>
-
 </body>
 </html>

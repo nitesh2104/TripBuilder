@@ -6,6 +6,9 @@ namespace App\Http\Controllers;
  * User: nitesh
  * Date: 26/03/18
  * Time: 9:05 PM
+ * This file has not been tested yet due to issues with POST request not working.
+ * Once the POST request is successfully done, then the logic to further work on
+ * the functions will be implemented and this comment will be removed.
  */
 use App\Airport;
 use App\Trip;
@@ -15,6 +18,10 @@ use Illuminate\Support\Facades\Request;
 class TripController extends Model
 {
     /**
+     * Obtains the airport name from the user input.
+     * Then moves forward to obtaining the airport code from the Airport table.
+     * Then returns the information of the airport code.
+     * This will be then used to obtain final information for the flight details.
      * @param Request $request
      * @param $formData
      * @return \Illuminate\Http\JsonResponse
@@ -37,6 +44,7 @@ class TripController extends Model
     }
 
     /**
+     * Creates instances of the airport code/ name in the trip table.
      * @param Request $request
      * @return bool
      * @internal param $Obj
@@ -50,6 +58,7 @@ class TripController extends Model
     }
 
     /**
+     * Deletes instances of the airport code/name in the database.
      * @param Request $request
      * @param $formData
      * @return mixed

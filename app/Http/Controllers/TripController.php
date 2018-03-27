@@ -1,21 +1,24 @@
 <?php
 namespace App\Http\Controllers;
+
 /**
  * Created by PhpStorm.
  * User: nitesh
  * Date: 26/03/18
  * Time: 9:05 PM
  */
+use App\Airport;
 use App\Trip;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Request;
+
 class TripController extends Model
 {
-    function getTrips(Request $request)
+    function get_Trips(Request $request)
     {
-//        $from = $request->from;
-//        $to = $request->to;
-        $flights = Trip::where('departure', "AAA")->where('destination', "YUL")->get();
+        $from = Airport::select('airport_code')->where('airport_name', 'like', "$request->from")->get();
+        $to = Airport::select('airport_code')->where('airport_name', 'like', "$request->from")->get();
+        $flights = Trip::where('departure', $from)->where('destination', $to)->get();
 
         $data = [];
         foreach ($flights as $item) {
@@ -25,8 +28,33 @@ class TripController extends Model
                 'destination' => $item->destination
             ];
         }
-
         return response()->json($data, 200);
+    }
+
+    /**
+     * @param Request $request
+     * @return bool
+     * @internal param $Obj
+     */
+    function add_Trips(Request $request, $formdata)
+    {
+        $trip = new Trip();
+        $trip->departure = $formdata->from;
+        $trip->destination = $formdata->to;
+        return $trip->save();
+    }
+
+    /**
+     * @param Request $request
+     * @param $departure
+     * @param $destination
+     * @return mixed
+     */
+    function delete_Trips(Request $request, $departure, $destination)
+    {
+        $filter = ['departure' => $departure, 'destination' => $destination];
+        return Trip::where($filter)->delete();
+
     }
 }
 

@@ -6,11 +6,14 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>TripBuilder</title>
+    <meta name="_token" content="{{csrf_token()}}"/>
+
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
     <!-- Custom fonts for this template -->
     <link rel="stylesheet" type="text/css" href="{{asset('css/font-awesome.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('css/simple-line-icons.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('css/jquery-ui.min.css')}}">
     <!-- Custom styles for this template -->
     <link rel="stylesheet" type="text/css" href="{{asset('css/landing-page.css')}}">
     <link rel="shortcut icon" type="image/png" href="{{asset('images/favicon.png')}}"/>
@@ -31,7 +34,7 @@
     <div class="search_box_div">
         <div class="row">
             <div class="col-md-12">
-                <form role="form" method="post" action="/airports/search">
+                <form role="form" method="post" action="">
                     <div class="form-group input-group">
                         <input type="text" name="from" class="search form-control"
                                placeholder="Departing City or Airport">
@@ -41,9 +44,11 @@
                         <input type="text" name="to" class="search form-control"
                                placeholder="Returning City or Airport">
                     </div>
-                    <button type="submit" class="btn btn-primary">Lets Go!</button>
-                </form>
 
+                    <button class="btn btn-primary" onclick="post_tripdata('search')">Lets Go!</button>
+                    <button class="btn btn-primary" onclick="post_tripdata('add_trip')">Add Trip</button>
+                    <button class="btn btn-primary" onclick="post_tripdata('delete_trip')">Delete Trip</button>
+                </form>
             </div>
         </div>
     </div>
@@ -56,7 +61,6 @@
     var base_url = window.location.origin;
     $('.search').autocomplete({
         source: function (request, response) {
-            console.log(request);
             $.ajax({
                 url: base_url + "/airports/autocomplete/" + request.term,
                 dataType: 'json',
@@ -70,8 +74,26 @@
                 }
             });
         },
-        minLength: 2
+        minLength: 1
     });
+</script>
+<script>
+    function post_tripdata(action) {
+        var formData = {
+            'from': $('input[name=from]').val(),
+            'to': $('input[name=to]').val()
+        };
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: 'POST',
+            url: "/airports/" + action,
+            data: formData
+        })
+    }
 </script>
 
 </body>

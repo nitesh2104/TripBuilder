@@ -64,15 +64,12 @@ class AirportController extends Model
     }
 
     /**
-     * @apiGroup Airports
-     * @apiDescription Returns autosuggested airports
-     * @apiParam  Request $request [Illuminate\Http\Request]
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse [string}[JSON]
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function autocomplete(Request $request)
+    public function autocomplete(Request $request, $input)
     {
-        $airports = Airport::where('city', 'like', "$request->input%")->orWhere('airport_code', 'like', "$request->input%")->orderBy('airport_code', 'asc')->limit(10)->get();
+        $airports = Airport::where('city', 'like', "$input%")->orWhere('airport_code', 'like', "$input%")->orderBy('airport_code', 'asc')->limit(10)->get();
         return response()->json($airports, 200);
     }
 

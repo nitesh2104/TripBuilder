@@ -20,9 +20,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'Controller@landing_page');
 Route::get('/main', 'Controller@main_page');
 Route::prefix('airports')->group(function () {
-    Route::get('autocomplete/{input}', 'AirportController@autocomplete');
     Route::get('/', 'AirportController@get_airports');
-//    Route::get('/search', 'AirportController@get_flights');
-    Route::post('/search', 'TripController@getTrips');
+    Route::get('autocomplete/{input}', 'AirportController@autocomplete');
+    Route::get('/search', 'TripController@get_Trips');
+    Route::get('/add_trip', 'TripController@add_Trips');
+    Route::get('/delete_trip', 'TripController@delete_Trips');
 });
 

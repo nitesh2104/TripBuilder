@@ -14,10 +14,10 @@ use Illuminate\Support\Facades\Request;
 
 class TripController extends Model
 {
-    function get_Trips(Request $request)
+    function get_Trips(Request $request, $formData)
     {
-        $from = Airport::select('airport_code')->where('airport_name', 'like', "$request->from")->get();
-        $to = Airport::select('airport_code')->where('airport_name', 'like', "$request->from")->get();
+        $from = Airport::select('airport_code')->where('airport_name', 'like', "$formData->from")->get();
+        $to = Airport::select('airport_code')->where('airport_name', 'like', "$formData->from")->get();
         $flights = Trip::where('departure', $from)->where('destination', $to)->get();
 
         $data = [];
@@ -50,9 +50,9 @@ class TripController extends Model
      * @param $destination
      * @return mixed
      */
-    function delete_Trips(Request $request, $departure, $destination)
+    function delete_Trips(Request $request, $formData)
     {
-        $filter = ['departure' => $departure, 'destination' => $destination];
+        $filter = ['departure' => $formData->from, 'destination' => $formData->to];
         return Trip::where($filter)->delete();
 
     }

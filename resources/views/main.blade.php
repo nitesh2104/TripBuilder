@@ -11,7 +11,7 @@
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
     <!-- Custom fonts for this template -->
-    <link rel="stylesheet" type="text/css" href="{{asset('css/font-awesome.min.css')}}">
+    <link rel="stylesheet" href="{{asset('css/fontawesome.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('css/simple-line-icons.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('css/jquery-ui.min.css')}}">
     <!-- Custom styles for this template -->
@@ -45,9 +45,15 @@
                                placeholder="Returning City or Airport">
                     </div>
 
-                    <button class="btn btn-primary" onclick="post_tripdata('search')">Lets Go!</button>
-                    <button class="btn btn-primary" onclick="post_tripdata('add_trip')">Add Trip</button>
-                    <button class="btn btn-primary" onclick="post_tripdata('delete_trip')">Delete Trip</button>
+                    <button class="btn btn-primary" onclick="post_tripdata('search')"><i
+                                class="fas fa-telegram-plane"></i>&nbsp;Lets Go!
+                    </button>
+                    <button class="btn btn-primary" onclick="post_tripdata('add_trip')"><i
+                                class="fas fa-plus-square"></i>&nbsp;Add Trip
+                    </button>
+                    <button class="btn btn-primary" onclick="post_tripdata('delete_trip')"><i
+                                class="fas fa-minus-circle"></i>&nbsp;Delete Trip
+                    </button>
                 </form>
             </div>
         </div>
@@ -91,7 +97,8 @@
         $.ajax({
             type: 'POST',
             url: "/airports/" + action,
-            data: formData
+            data: formData,
+            dataType: json
         })
     }
 </script>

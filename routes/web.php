@@ -25,5 +25,6 @@ Route::prefix('airports')->group(function () {
     Route::get('/search', 'TripController@get_Trips');
     Route::get('/add_trip', 'TripController@add_Trips');
     Route::get('/delete_trip', 'TripController@delete_Trips');
+    Route::get('/create_airports', 'AirportController@create_airports');
 });
 

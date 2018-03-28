@@ -23,6 +23,7 @@ Route::get('/viewTrips', 'TripController@viewTrips');
 Route::post('search', 'TripController@get_Trips');
 Route::post('addTrip', 'TripController@add_Trips');
 Route::post('deleteTrip', 'TripController@delete_Trips');
+Route::get('recreateAirports', 'AirportController@create_airports');
 
 Route::prefix('airports')->group(function () {
     Route::get('/', 'AirportController@get_airports');

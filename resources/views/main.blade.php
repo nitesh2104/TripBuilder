@@ -26,8 +26,11 @@
 <nav class="navbar navbar-light bg-light static-top">
     <div class="container">
         <a class="navbar-brand" href="/"><img src="{{asset("images/favicon.png")}}" class="icon_main" alt="">&nbsp;TripBuilder</a>
-        <div><a class="btn btn-primary" href="{{url('viewTrips')}}">View Trips</a>
-            <a class="btn btn-primary" href="{{url('airports')}}">See Airports</a></div>
+
+        <div>
+            <a class="btn btn-primary" href="{{url('recreateAirports')}}">Fetch Airport Data</a>
+            <a class="btn btn-primary" href="{{url('viewTrips')}}" target="_blank">View Trips</a>
+            <a class="btn btn-primary" href="{{url('airports')}}" target="_blank">See Airports</a></div>
     </div>
 </nav>
 <!-- Masthead -->
@@ -49,7 +52,7 @@
                                placeholder="Returning City or Airport" required>
                     </div>
 
-                    <button class="btn btn-primary search"><i class="fa fa-plane" aria-hidden="true"></i>&nbsp;Lets Go!
+                    <button class="btn btn-primary searches"><i class="fa fa-plane" aria-hidden="true"></i>&nbsp;Lets Go!
                     </button>&emsp;
                     <button class="btn btn-primary addTrip"><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;Add Trip
                     </button>&emsp;
@@ -103,7 +106,7 @@
         minLength: 1
     });
     $(document).ready(function () {
-        $(".search").click(function (event) {
+        $(".searches").click(function (event) {
             event.preventDefault();
             post_ajax('search');
         });
@@ -123,7 +126,12 @@
 
         };
         $.post(action, formData, function (data) {
-            console.log(data);
+            if (data.length >=1){
+                alert('Trip Found! Go to View Trips')
+            }
+            else if (data.length == 0){
+                alert('No Trips found sorry! Try Again Later!')
+            }
         });
     }
 </script>

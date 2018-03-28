@@ -53,7 +53,7 @@ class TripController extends Model
                 'destination' => $item->destination
             ];
         }
-//        return view('showtrips', ['name' => $data]);
+        return response()->json($data, 200);
     }
 
     /**

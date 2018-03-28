@@ -53,7 +53,8 @@
 <nav class="navbar navbar-light bg-light static-top">
     <div class="container">
         <a class="navbar-brand" href="/"><img src="{{asset("images/favicon.png")}}" class="icon_main" alt="">&nbsp;TripBuilder</a>
-        <a class="btn btn-primary" href="{{url('main')}}">Back</a>
+        <div><a class="btn btn-primary" href="{{url('recreateAirports')}}">Fetch Updates</a>
+        <a class="btn btn-primary" href="{{url('main')}}">Back</a></div>
     </div>
 </nav>
 

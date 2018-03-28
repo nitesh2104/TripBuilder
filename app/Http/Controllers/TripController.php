@@ -23,13 +23,13 @@ class TripController extends Model
      * Then returns the information of the airport code.
      * This will be then used to obtain final information for the flight details.
      * @param Request $request
-     * @param $formData
      * @return \Illuminate\Http\JsonResponse
+     * @internal param $formData
      */
-    function get_Trips(Request $request, $formData)
+    function get_Trips(Request $request)
     {
-        $from = Airport::select('airport_code')->where('airport_name', 'like', "$formData->from")->get();
-        $to = Airport::select('airport_code')->where('airport_name', 'like', "$formData->from")->get();
+        $from = Airport::select('airport_code')->where('airport_name', 'like', "$request->from")->get();
+        $to = Airport::select('airport_code')->where('airport_name', 'like', "$request->to")->get();
         $flights = Trip::where('departure', $from)->where('destination', $to)->get();
 
         $data = [];
@@ -45,29 +45,29 @@ class TripController extends Model
 
     /**
      * Creates instances of the airport code/ name in the trip table.
-     * @param Request $request
      * @return bool
+     * @internal param Request $request
      * @internal param $Obj
      */
-    function add_Trips(Request $request, $formdata)
+    function add_Trips()
     {
         $trip = new Trip();
-        $trip->departure = $formdata->from;
-        $trip->destination = $formdata->to;
+        $trip->departure = request()->from;
+        $trip->destination = request()->to;
         return $trip->save();
     }
 
     /**
      * Deletes instances of the airport code/name in the database.
-     * @param Request $request
-     * @param $formData
      * @return mixed
+     * @internal param Request $request
+     * @internal param $formData
      * @internal param $departure
      * @internal param $destination
      */
-    function delete_Trips(Request $request, $formData)
+    function delete_Trips()
     {
-        $filter = ['departure' => $formData->from, 'destination' => $formData->to];
+        $filter = ['departure' => request()->from, 'destination' => request()->to];
         return Trip::where($filter)->delete();
 
     }

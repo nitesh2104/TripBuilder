@@ -6,7 +6,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>TripBuilder</title>
-    <meta name="_token" content="{{csrf_token()}}"/>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
@@ -34,6 +35,7 @@
     <div class="search_box_div">
         <div class="row">
             <div class="col-md-12">
+                <form id="inputs" action="#"><input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <div class="form-group input-group">
                     <input type="text" name="from" class="search form-control"
                            placeholder="Departing City or Airport">
@@ -44,15 +46,15 @@
                            placeholder="Returning City or Airport">
                 </div>
 
-                <button class="btn btn-primary searches"><i
+                <button class="btn btn-primary search"><i
                             class="fas fa-telegram-plane"></i>&nbsp;Lets Go!
                 </button>&emsp;
-                <button class="btn btn-primary"><i
+                <button class="btn btn-primary addTrip"><i
                             class="fas fa-plus-square"></i>&nbsp;Add Trip
                 </button>&emsp;
-                <button class="btn btn-primary"><i
+                <button class="btn btn-primary deleteTrip"><i
                             class="fas fa-minus-circle"></i>&nbsp;Delete Trip
-                </button>
+                </button></form>
             </div>
         </div>
     </div>
@@ -63,6 +65,11 @@
 <script src="{{asset('js/bootstrap.min.js')}}"></script>
 <script>
     var base_url = window.location.origin;
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
     $('.search').autocomplete({
         source: function (request, response) {
             $.ajax({
@@ -80,24 +87,30 @@
         },
         minLength: 1
     });
-    $(".searches").click(function (event) {
+    $(document).ready(function () {
+        $(".search").click(function (event) {
+            event.preventDefault();
+            post_ajax('search');
+        });
+        $(".addTrip").click(function (event) {
+            event.preventDefault();
+            post_ajax('addTrip');
+        });
+        $(".deleteTrip").click(function (event) {
+            event.preventDefault();
+            post_ajax('deleteTrip');
+        });
+    });
+    function post_ajax(action){
         var formData = {
             'from': $('input[name=from]').val(),
             'to': $('input[name=to]').val()
+
         };
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-            }
+        $.post(action, formData, function (data) {
+            console.log(data);
         });
-        alert(base_url + "/airports/search/");
-        $.ajax({
-            type: 'POST',
-            url: base_url + "/airports/search",
-            data: formData
-        });
-        event.preventDefault();
-    });
+    }
 </script>
 </body>
 </html>

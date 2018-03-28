@@ -17,7 +17,9 @@
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script>
         $(document).ready(function () {
-            $('#data_table').DataTable();
+            $('#data_table').DataTable({
+                "order": [ 1, 'asc' ]
+            });
         });
     </script>
     <style>

@@ -3,7 +3,7 @@
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
     <!-- Custom fonts for this template -->
-    <link rel="stylesheet" href="{{asset('font-awesome/css/font-awesome.min.css')}}">
+    <link rel="stylesheet" href="{{asset('css/fontawesome.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('css/simple-line-icons.css')}}">
     <!-- Custom styles for this template -->
     <link rel="stylesheet" type="text/css" href="{{asset('css/landing-page.css')}}">
@@ -17,7 +17,9 @@
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script>
         $(document).ready(function () {
-            $('#data_table').DataTable();
+            $('#data_table').DataTable({
+                "order": [ 0, 'desc' ]
+            });
         });
     </script>
     <style>
@@ -56,56 +58,25 @@
         <a class="btn btn-primary" href="{{url('main')}}">Back</a>
     </div>
 </nav>
-
+<h1>Your trips!</h1>
 <table class="main_table" id="data_table">
     <thead class="main_thead">
     <tr>
         <th>#</th>
-        <th>
-            Airport Names
-        </th>
-        <th>
-            Airport Code
-        </th>
-        <th>
-            City
-        </th>
-        <th>
-            State
-        </th>
-        <th>
-            Country
-        </th>
+        <th>From Airport</th>
+        <th>To Aiport</th>
     </tr>
     </thead>
     <tbody>
+
     @foreach ($name as $key=>$user)
         <tr class="tr_main">
-            <td>{{ ++$key }}</td>
-            <td>
-                @if ($user->airport_name == "")
-                    None
-                @else
-                    {{ $user->airport_name }}
-                @endif
-            </td>
-            <td>{{ $user->airport_code }}</td>
-            <td>{{ $user->city }}</td>
-            <td>
-                @if ($user->state=="")
-                    None
-                @else
-                    {{ $user->state }}
-                @endif
-            </td>
-            <td>{{ $user->country }}</td>
+            <td>{{++$key}}</td>
+            <td>{{ $user->departure }}</td>
+            <td>{{ $user->destination }}</td>
         </tr>
     @endforeach
-
-
     </tbody>
-
 </table>
 </body>
-
 </html>

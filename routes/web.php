@@ -19,6 +19,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'Controller@landing_page');
 Route::get('/main', 'Controller@main_page');
+Route::get('/viewTrips', 'TripController@viewTrips');
 Route::post('search', 'TripController@get_Trips');
 Route::post('addTrip', 'TripController@add_Trips');
 Route::post('deleteTrip', 'TripController@delete_Trips');

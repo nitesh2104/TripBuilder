@@ -18,19 +18,32 @@ use Illuminate\Support\Facades\Request;
 class TripController extends Model
 {
     /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    function viewTrips(){
+        $trips = Trip::all();
+        $data = [];
+        foreach ($trips as $item) {
+            $data[] = [
+                'id' => $item->id,
+                'departure' => $item->departure,
+                'destination' => $item->destination
+            ];
+        }
+        return view('showtrips', ['name' => Trip::all()]);
+    }
+    /**
      * Obtains the airport name from the user input.
      * Then moves forward to obtaining the airport code from the Airport table.
      * Then returns the information of the airport code.
      * This will be then used to obtain final information for the flight details.
-     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
+     * @internal param Request $request
      * @internal param $formData
      */
-    function get_Trips(Request $request)
-    {
-        $from = Airport::select('airport_code')->where('airport_name', 'like', "$request->from")->get();
-        $to = Airport::select('airport_code')->where('airport_name', 'like', "$request->to")->get();
-        $flights = Trip::where('departure', $from)->where('destination', $to)->get();
+    function get_Trips()
+    {   $where_clause = ['departure'=>request()->from, 'destination'=>request()->to];
+        $flights = Trip::where($where_clause)->get();
 
         $data = [];
         foreach ($flights as $item) {
@@ -40,7 +53,7 @@ class TripController extends Model
                 'destination' => $item->destination
             ];
         }
-        return response()->json($data, 200);
+//        return view('showtrips', ['name' => $data]);
     }
 
     /**

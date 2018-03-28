@@ -12,7 +12,7 @@
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
     <!-- Custom fonts for this template -->
-    <link rel="stylesheet" href="{{asset('css/fontawesome.min.css')}}">
+    <link rel="stylesheet" href="{{asset('font-awesome/css/font-awesome.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('css/simple-line-icons.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('css/jquery-ui.min.css')}}">
     <!-- Custom styles for this template -->
@@ -26,7 +26,8 @@
 <nav class="navbar navbar-light bg-light static-top">
     <div class="container">
         <a class="navbar-brand" href="/"><img src="{{asset("images/favicon.png")}}" class="icon_main" alt="">&nbsp;TripBuilder</a>
-        <a class="btn btn-primary" href="{{url('airports')}}">See Airports</a>
+        <div><a class="btn btn-primary" href="{{url('viewTrips')}}">View Trips</a>
+            <a class="btn btn-primary" href="{{url('airports')}}">See Airports</a></div>
     </div>
 </nav>
 <!-- Masthead -->
@@ -36,29 +37,43 @@
         <div class="row">
             <div class="col-md-12">
                 <form id="inputs" action="#"><input type="hidden" name="_token" value="{{ csrf_token() }}">
-                <div class="form-group input-group">
-                    <input type="text" name="from" class="search form-control"
-                           placeholder="Departing City or Airport">
-                </div>
+                    <div class="form-group input-group">
+                        <span><i class="fa fa-chevron-circle-right fa-2x search_input_icons" aria-hidden="true"></i></span>
+                        <input type="text" name="from" class="search form-control"
+                               placeholder="Departing City or Airport" required>
+                    </div>
 
-                <div class="form-group input-group">
-                    <input type="text" name="to" class="search form-control"
-                           placeholder="Returning City or Airport">
-                </div>
+                    <div class="form-group input-group">
+                        <span><i class="fa fa-chevron-circle-right fa-2x search_input_icons" aria-hidden="true"></i></span>
+                        <input type="text" name="to" class="search form-control"
+                               placeholder="Returning City or Airport" required>
+                    </div>
 
-                <button class="btn btn-primary search"><i
-                            class="fas fa-telegram-plane"></i>&nbsp;Lets Go!
-                </button>&emsp;
-                <button class="btn btn-primary addTrip"><i
-                            class="fas fa-plus-square"></i>&nbsp;Add Trip
-                </button>&emsp;
-                <button class="btn btn-primary deleteTrip"><i
-                            class="fas fa-minus-circle"></i>&nbsp;Delete Trip
-                </button></form>
+                    <button class="btn btn-primary search"><i class="fa fa-plane" aria-hidden="true"></i>&nbsp;Lets Go!
+                    </button>&emsp;
+                    <button class="btn btn-primary addTrip"><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;Add Trip
+                    </button>&emsp;
+                    <button class="btn btn-primary deleteTrip"><i class="fa fa-minus-circle" aria-hidden="true"></i>
+                        &nbsp;Delete Trip
+                    </button>
+                </form>
             </div>
         </div>
     </div>
 </header>
+<!-- Footer -->
+<footer class="footer bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
+                <p class="text-muted small mb-4 mb-lg-0">&copy; Nitesh Arora 2018. All Rights Reserved.</p>
+            </div>
+            <div class="col-lg-6 h-100 text-center text-lg-right my-auto">
+            </div>
+        </div>
+    </div>
+</footer>
+
 
 <script src="{{asset('js/jquery.min.js')}}"></script>
 <script src="{{asset('js/jquery-ui.js')}}"></script>
@@ -101,7 +116,7 @@
             post_ajax('deleteTrip');
         });
     });
-    function post_ajax(action){
+    function post_ajax(action) {
         var formData = {
             'from': $('input[name=from]').val(),
             'to': $('input[name=to]').val()

@@ -152,3 +152,9 @@ footer.footer {
     height: 40px;
     padding-left: 0px;
 }
+.search_input_icons{
+    padding: 0.3em;
+    background-color: #5c6ac4;
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+}

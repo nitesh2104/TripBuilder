@@ -47,11 +47,11 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
-            'host' => $host,
-            'port' => $port,
-            'database' => $database,
-            'username' => $username,
-            'password' => $password,
+            'host' => "us-cdbr-iron-east-05.cleardb.net",
+            'port' => "3306",
+            'database' => "heroku_e6d9deac227c440",
+            'username' => "bfa6e7acf497e4",
+            'password' => "06ae5325",
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => 'utf8',
             'collation' => 'utf8_unicode_ci',
